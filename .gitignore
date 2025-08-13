@@ -1,0 +1,58 @@
+## Игнорировать файлы сборки и отладки
+bin/
+obj/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Файлы пакетов NuGet
+**/[Pp]ackages/*
+!**/[Pp]ackages/repositories.config
+.nuget/
+*.nupkg
+NuGet.exe
+NuGet.Config
+
+## Резервные и временные файлы
+*~
+*.swp
+*.swo
+
+## Файлы Rider / ReSharper
+.idea/
+*.sln.iml
+*.DotSettings.user
+
+## Файлы Visual Studio
+.vs/
+.vscode/
+*.VC.db
+*.VC.VC.opendb
+
+## Файлы Docker
+docker-compose.override.yml
+docker-compose.vs.debug.yml
+docker-compose.vs.release.yml
+
+## Файлы тестовых покрытий
+coverage.json
+*.coverage
+*.coveragexml
+
+## Файлы логов и дампов
+*.log
+*.dump
+
+## Файлы пользовательских секретов (не должны быть в репозитории)
+appsettings.Development.json
+secrets.json
+
+## Файлы Azure Functions
+local.settings.json
+
+## Файлы клиентских зависимостей (если есть, например, в SPA)
+node_modules/
