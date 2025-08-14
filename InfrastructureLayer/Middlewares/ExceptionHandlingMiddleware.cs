@@ -36,6 +36,7 @@ namespace ExpenseTracker.InfrastructureLayer.Middlewares
             {
                 ValidationException => StatusCodes.Status400BadRequest,
                 UserAlreadyExistsException => StatusCodes.Status400BadRequest,
+                InvalidLoginDataException => StatusCodes.Status400BadRequest,
                 UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
                 _ => StatusCodes.Status500InternalServerError
             };

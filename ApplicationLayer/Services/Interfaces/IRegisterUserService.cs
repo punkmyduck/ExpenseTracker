@@ -1,6 +1,6 @@
-﻿using ExpenseTracker.DomainLayer.Auth.DTO;
+﻿using ExpenseTracker.ApplicationLayer.Auth.DTO;
 
-namespace ExpenseTracker.DomainLayer.Auth
+namespace ExpenseTracker.ApplicationLayer.Services.Interfaces
 {
     public interface IRegisterUserService
     {

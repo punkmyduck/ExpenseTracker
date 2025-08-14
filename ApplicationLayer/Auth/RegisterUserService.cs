@@ -1,6 +1,7 @@
-﻿using ExpenseTracker.ApplicationLayer.Interfaces.Repositories;
+﻿using ExpenseTracker.ApplicationLayer.Auth.DTO;
+using ExpenseTracker.ApplicationLayer.Repositories.Interfaces;
+using ExpenseTracker.ApplicationLayer.Services.Interfaces;
 using ExpenseTracker.DomainLayer.Auth;
-using ExpenseTracker.DomainLayer.Auth.DTO;
 using ExpenseTracker.DomainLayer.Auth.Validation;
 using ExpenseTracker.DomainLayer.ExpenseTrackerDataModels;
 
@@ -9,13 +10,13 @@ namespace ExpenseTracker.ApplicationLayer.Auth
     public class RegisterUserService : IRegisterUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IPasswordHasher _passwordHasher;
+        private readonly IPasswordSaltHasher _passwordHasher;
         private readonly IEmailValidator _emailValidator;
         private readonly IUserNameValidator _userNameValidator;
         private readonly IPasswordValidator _passwordValidator;
         public RegisterUserService(
             IUserRepository userRepository, 
-            IPasswordHasher passwordHasher, 
+            IPasswordSaltHasher passwordHasher, 
             IEmailValidator emailValidator, 
             IUserNameValidator userNameValidator, 
             IPasswordValidator passwordValidator)
@@ -31,7 +32,7 @@ namespace ExpenseTracker.ApplicationLayer.Auth
             ValidateData(registerUserRequest);
             await CheckExistingUsers(registerUserRequest);
 
-            PasswordHashDto passwordHash = await _passwordHasher.GetPasswordHashAsync(registerUserRequest.Password);
+            PasswordHashDto passwordHash = await _passwordHasher.GetPasswordSaltHashAsync(registerUserRequest.Password);
 
             User newUser = new User
             {

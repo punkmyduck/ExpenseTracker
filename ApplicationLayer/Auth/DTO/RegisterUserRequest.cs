@@ -1,6 +1,4 @@
-﻿using ExpenseTracker.DomainLayer.ExpenseTrackerDataModels;
-
-namespace ExpenseTracker.DomainLayer.Auth.DTO
+﻿namespace ExpenseTracker.ApplicationLayer.Auth.DTO
 {
     public class RegisterUserRequest
     {

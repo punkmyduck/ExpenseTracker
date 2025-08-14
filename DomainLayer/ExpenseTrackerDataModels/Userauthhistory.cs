@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ExpenseTracker.DomainLayer.ExpenseTrackerDataModels;
+﻿namespace ExpenseTracker.DomainLayer.ExpenseTrackerDataModels;
 
 public partial class Userauthhistory
 {
