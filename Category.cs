@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using ExpenseTracker.DomainLayer.ExpenseTrackerDataModels;
 
-namespace ExpenseTracker.DomainLayer.ExpenseTrackerDataModels;
+namespace ExpenseTracker;
 
 public partial class Category
 {

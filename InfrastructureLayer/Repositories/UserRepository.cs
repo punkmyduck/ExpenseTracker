@@ -19,22 +19,22 @@ namespace ExpenseTracker.InfrastructureLayer.Repositories
 
         public async Task<User?> GetByEmailAsync(string email)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<User?> GetById(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Userid == id);
+            return await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Userid == id);
         }
 
         public async Task<User?> GetByUsername(string username)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            return await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Username == username);
         }
 
         public async Task<List<User>?> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.AsNoTracking().ToListAsync();
         }
     }
 }

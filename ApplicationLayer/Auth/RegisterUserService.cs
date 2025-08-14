@@ -14,6 +14,7 @@ namespace ExpenseTracker.ApplicationLayer.Auth
         private readonly IEmailValidator _emailValidator;
         private readonly IUserNameValidator _userNameValidator;
         private readonly IPasswordValidator _passwordValidator;
+        
         public RegisterUserService(
             IUserRepository userRepository, 
             IPasswordSaltHasher passwordHasher, 
@@ -27,7 +28,7 @@ namespace ExpenseTracker.ApplicationLayer.Auth
             _userNameValidator = userNameValidator;
             _passwordValidator = passwordValidator;
         }
-        public async Task<RegisterUserResponse> ExecuteAsync(RegisterUserRequest registerUserRequest)
+        public async Task<RegisterUserResponse> ExecuteAsync(RegisterUserMapper registerUserRequest)
         {
             ValidateData(registerUserRequest);
             await CheckExistingUsers(registerUserRequest);
@@ -38,8 +39,11 @@ namespace ExpenseTracker.ApplicationLayer.Auth
             {
                 Username = registerUserRequest.Username,
                 Email = registerUserRequest.Email,
-                Passwordhash = passwordHash.PasswordHash,
-                Salt = passwordHash.Salt
+                Userauthdatum = new Userauthdatum
+                {
+                    Passwordhash = passwordHash.PasswordHash ?? throw new Exception(),
+                    Salt = passwordHash.Salt ?? throw 
+                }
             };
 
             await _userRepository.AddAsync(newUser);
@@ -47,7 +51,7 @@ namespace ExpenseTracker.ApplicationLayer.Auth
             return new RegisterUserResponse { UserId = newUser.Userid };
         }
 
-        private async Task CheckExistingUsers(RegisterUserRequest registerUserRequest)
+        private async Task CheckExistingUsers(RegisterUserMapper registerUserRequest)
         {
             if (await _userRepository.GetByEmailAsync(registerUserRequest.Email) != null)
             {
@@ -59,7 +63,7 @@ namespace ExpenseTracker.ApplicationLayer.Auth
             }
         }
 
-        private void ValidateData(RegisterUserRequest registerUserRequest)
+        private void ValidateData(RegisterUserMapper registerUserRequest)
         {
             if (!_emailValidator.IsValid(registerUserRequest.Email))
             {

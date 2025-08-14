@@ -3,6 +3,7 @@ using ExpenseTracker.ApplicationLayer.Repositories.Interfaces;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces;
 using ExpenseTracker.DomainLayer.Auth;
 using ExpenseTracker.DomainLayer.Auth.Validation;
+using ExpenseTracker.DomainLayer.ExpenseTrackerDataModels;
 
 namespace ExpenseTracker.ApplicationLayer.Auth
 {
@@ -11,14 +12,17 @@ namespace ExpenseTracker.ApplicationLayer.Auth
         private readonly IPasswordSaltHasher _passwordHasher;
         private readonly IUserRepository _userRepository;
         private readonly IEmailValidator _emailValidator;
+        private readonly IUserAuthRepository _userAuthRepository;
         public LoginUserService(
             IPasswordSaltHasher passwordHasher, 
             IUserRepository userRepository,
-            IEmailValidator emailValidator)
+            IEmailValidator emailValidator,
+            IUserAuthRepository userAuthRepository)
         {
             _passwordHasher = passwordHasher;
             _userRepository = userRepository;
             _emailValidator = emailValidator;
+            _userAuthRepository = userAuthRepository;
         }
         public async Task<LoginUserResponse> ExecuteAsync(LoginUserRequest loginRequest)
         {
@@ -26,15 +30,16 @@ namespace ExpenseTracker.ApplicationLayer.Auth
                 ? await _userRepository.GetByEmailAsync(loginRequest.Email)
                 : await _userRepository.GetByUsername(loginRequest.Username);
 
-            if (user == null)
-            {
+            if (user == null) 
                 throw new InvalidLoginDataException("Invalid login or password");
-            }
 
-            if (!_passwordHasher.VerifyPassword(loginRequest.Password, user.Passwordhash, user.Salt))
-            {
+            Userauthdatum userAuthData = await _userAuthRepository.GetByIdAsync(user.Userid);
+
+            if (userAuthData == null) 
+                throw new UserNotFoundException("User not found!");
+
+            if (!_passwordHasher.VerifyPassword(loginRequest.Password, userAuthData.Passwordhash, userAuthData.Salt)) 
                 throw new InvalidLoginDataException("Invalid login or password");
-            }
 
             return new LoginUserResponse();
         }

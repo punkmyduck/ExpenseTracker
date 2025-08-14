@@ -25,6 +25,8 @@ public partial class ExpenseTrackerContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<Userauthdatum> Userauthdata { get; set; }
+
     public virtual DbSet<Userauthhistory> Userauthhistories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -136,15 +138,34 @@ public partial class ExpenseTrackerContext : DbContext
             entity.Property(e => e.Email)
                 .HasMaxLength(255)
                 .HasColumnName("email");
-            entity.Property(e => e.Passwordhash)
-                .HasMaxLength(255)
-                .HasColumnName("passwordhash");
-            entity.Property(e => e.Salt)
-                .HasMaxLength(255)
-                .HasColumnName("salt");
             entity.Property(e => e.Username)
                 .HasMaxLength(20)
                 .HasColumnName("username");
+        });
+
+        modelBuilder.Entity<Userauthdatum>(entity =>
+        {
+            entity.HasKey(e => e.Userid).HasName("userauthdata_pkey");
+
+            entity.ToTable("userauthdata");
+
+            entity.Property(e => e.Userid)
+                .ValueGeneratedNever()
+                .HasColumnName("userid");
+            entity.Property(e => e.Passwordhash)
+                .HasMaxLength(255)
+                .HasColumnName("passwordhash");
+            entity.Property(e => e.Refreshtoken)
+                .HasMaxLength(255)
+                .HasColumnName("refreshtoken");
+            entity.Property(e => e.Salt)
+                .HasMaxLength(255)
+                .HasColumnName("salt");
+
+            entity.HasOne(d => d.User).WithOne(p => p.Userauthdatum)
+                .HasForeignKey<Userauthdatum>(d => d.Userid)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("userauthdata_userid_fkey");
         });
 
         modelBuilder.Entity<Userauthhistory>(entity =>
