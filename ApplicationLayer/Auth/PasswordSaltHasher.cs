@@ -1,5 +1,6 @@
 ﻿using ExpenseTracker.ApplicationLayer.Auth.DTO;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces;
+using ExpenseTracker.DomainLayer.Auth;
 using System.Security.Cryptography;
 
 namespace ExpenseTracker.ApplicationLayer.Auth
@@ -22,17 +23,18 @@ namespace ExpenseTracker.ApplicationLayer.Auth
             });
         }
 
-        public Task<PasswordHashDto> GetPasswordWithFixedSaltHashAsync(string password, string salt)
+        public bool VerifyPassword(string password, string storedHash, string storedSalt)
         {
-            byte[] saltBytes = Convert.FromBase64String(salt);
-            using var pbkdf2 = new Rfc2898DeriveBytes(password, saltBytes, 100_000, HashAlgorithmName.SHA256);
-            byte[] hashBytes = pbkdf2.GetBytes(32);
+            byte[] saltBytes = Convert.FromBase64String(storedSalt);
+            byte[] hashBytes = HashPassword(password, saltBytes);
 
-            return Task.FromResult(new PasswordHashDto
-            {
-                PasswordHash = Convert.ToBase64String(hashBytes),
-                Salt = Convert.ToBase64String(saltBytes)
-            });
+            return Convert.ToBase64String(hashBytes) == storedHash;
+        }
+
+        private byte[] HashPassword(string password, byte[] salt)
+        {
+            using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100_000, HashAlgorithmName.SHA256);
+            return pbkdf2.GetBytes(32);
         }
     }
 }

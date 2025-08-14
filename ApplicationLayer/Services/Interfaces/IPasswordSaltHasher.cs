@@ -5,6 +5,6 @@ namespace ExpenseTracker.ApplicationLayer.Services.Interfaces
     public interface IPasswordSaltHasher
     {
         Task<PasswordHashDto> GetPasswordSaltHashAsync(string password);
-        Task<PasswordHashDto> GetPasswordWithFixedSaltHashAsync(string password, string salt);
+        bool VerifyPassword(string password, string storedHash, string storedSalt);
     }
 }

@@ -31,8 +31,7 @@ namespace ExpenseTracker.ApplicationLayer.Auth
                 throw new InvalidLoginDataException("Invalid login or password");
             }
 
-            var passwordHashDto = await _passwordHasher.GetPasswordWithFixedSaltHashAsync(loginRequest.Password, user.Salt);
-            if (passwordHashDto.PasswordHash != user.Passwordhash)
+            if (!_passwordHasher.VerifyPassword(loginRequest.Password, user.Passwordhash, user.Salt))
             {
                 throw new InvalidLoginDataException("Invalid login or password");
             }
