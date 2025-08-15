@@ -13,16 +13,22 @@ namespace ExpenseTracker.ApplicationLayer.Auth
         private readonly IUserRepository _userRepository;
         private readonly IEmailValidator _emailValidator;
         private readonly IUserAuthRepository _userAuthRepository;
+        private readonly IJwtTokenService _jwtTokenService;
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
         public LoginUserService(
             IPasswordSaltHasher passwordHasher, 
             IUserRepository userRepository,
             IEmailValidator emailValidator,
-            IUserAuthRepository userAuthRepository)
+            IUserAuthRepository userAuthRepository,
+            IJwtTokenService jwtTokenService,
+            IRefreshTokenRepository refreshTokenRepository)
         {
             _passwordHasher = passwordHasher;
             _userRepository = userRepository;
             _emailValidator = emailValidator;
             _userAuthRepository = userAuthRepository;
+            _jwtTokenService = jwtTokenService;
+            _refreshTokenRepository = refreshTokenRepository;
         }
         public async Task<LoginUserResponse> ExecuteAsync(LoginUserRequest loginRequest)
         {
@@ -38,7 +44,28 @@ namespace ExpenseTracker.ApplicationLayer.Auth
             if (!_passwordHasher.VerifyPassword(loginRequest.Password, userAuthData!.Passwordhash, userAuthData.Salt)) 
                 throw new InvalidLoginDataException("Invalid login or password");
 
-            return new LoginUserResponse();
+            var accessToken = _jwtTokenService.GenerateAccessToken(user, out var expiresAt);
+            var refreshToken = _jwtTokenService.GenerateRefreshToken();
+
+            var refreshTokenModel = new Refreshtoken
+            {
+                Token = refreshToken.RefreshToken,
+                Userid = user.Userid,
+                Expiresat = refreshToken.ExpiresAt
+            };
+
+            await _refreshTokenRepository.AddAsync(refreshTokenModel);
+
+            return new LoginUserResponse
+            {
+                AccessToken = accessToken,
+                AccessTokenExpiresAt = expiresAt,
+                RefreshToken = refreshToken.RefreshToken,
+                RefreshTokenExpiresAt = refreshTokenModel.Expiresat.Value,
+                UserId = user.Userid,
+                UserName = user.Username,
+                Email = user.Email
+            };
         }
     }
 }

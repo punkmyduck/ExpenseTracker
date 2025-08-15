@@ -17,6 +17,7 @@ namespace ExpenseTracker.ApplicationLayer
             services.AddScoped<IPasswordValidator, PasswordValidator>();
             services.AddScoped<ILoginUserService, LoginUserService>();
             services.AddScoped<IRegisterUserMapper, RegisterUserMapper>();
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
 
             return services;
         }

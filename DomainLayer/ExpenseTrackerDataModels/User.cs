@@ -13,6 +13,8 @@ public partial class User
 
     public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 
+    public virtual ICollection<Refreshtoken> Refreshtokens { get; set; } = new List<Refreshtoken>();
+
     public virtual ICollection<Report> Reports { get; set; } = new List<Report>();
 
     public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
