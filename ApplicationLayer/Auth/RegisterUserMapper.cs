@@ -6,9 +6,8 @@ namespace ExpenseTracker.ApplicationLayer.Auth
 {
     public class RegisterUserMapper : IRegisterUserMapper
     {
-        public Task<User?> MapUserAsync(RegisterUserRequest registerUserRequest, PasswordHashDto passwordHash)
+        public async Task<User> MapUserAsync(RegisterUserRequest registerUserRequest, PasswordHashDto passwordHash)
         {
-
             User user = new User
             {
                 Username = registerUserRequest.Username,
@@ -19,7 +18,8 @@ namespace ExpenseTracker.ApplicationLayer.Auth
                     Salt = passwordHash.Salt
                 }
             };
-            return Task<User?>.FromResult(user);
+
+            return await Task.FromResult(user);
         }
     }
 }

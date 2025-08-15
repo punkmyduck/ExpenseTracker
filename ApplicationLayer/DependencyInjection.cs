@@ -1,5 +1,6 @@
 ﻿using ExpenseTracker.ApplicationLayer.Auth;
 using ExpenseTracker.ApplicationLayer.Auth.Validation;
+using ExpenseTracker.ApplicationLayer.Mapping.Interfaces;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces;
 using ExpenseTracker.DomainLayer.Auth.Validation;
 
@@ -15,6 +16,7 @@ namespace ExpenseTracker.ApplicationLayer
             services.AddScoped<IUserNameValidator, UserNameValidator>();
             services.AddScoped<IPasswordValidator, PasswordValidator>();
             services.AddScoped<ILoginUserService, LoginUserService>();
+            services.AddScoped<IRegisterUserMapper, RegisterUserMapper>();
 
             return services;
         }

@@ -8,6 +8,8 @@ namespace ExpenseTracker.InfrastructureLayer
         public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserAuthHistoryRepository, UserAuthHistoryRepository>();
+            services.AddScoped<IUserAuthRepository, UserAuthRepository>();
 
             return services;
         }

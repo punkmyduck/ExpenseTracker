@@ -34,10 +34,6 @@ namespace ExpenseTracker.ApplicationLayer.Auth
                 throw new InvalidLoginDataException("Invalid login or password");
 
             Userauthdatum userAuthData = await _userAuthRepository.GetByIdAsync(user.Userid);
-
-            if (userAuthData == null) 
-                throw new UserNotFoundException("User not found!");
-
             if (!_passwordHasher.VerifyPassword(loginRequest.Password, userAuthData.Passwordhash, userAuthData.Salt)) 
                 throw new InvalidLoginDataException("Invalid login or password");
 

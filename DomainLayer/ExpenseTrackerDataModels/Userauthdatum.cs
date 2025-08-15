@@ -11,7 +11,7 @@ public partial class Userauthdatum
 
     public string Salt { get; set; } = null!;
 
-    public string Refreshtoken { get; set; } = null!;
+    public string? Refreshtoken { get; set; }
 
     public virtual User User { get; set; } = null!;
 }
