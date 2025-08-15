@@ -3,6 +3,7 @@ using ExpenseTracker.ApplicationLayer.Repositories.Interfaces;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces;
 using ExpenseTracker.DomainLayer.Auth;
 using ExpenseTracker.DomainLayer.Auth.Validation;
+using ExpenseTracker.DomainLayer.ExpenseTrackerDataModels;
 
 namespace ExpenseTracker.ApplicationLayer.Auth
 {
@@ -11,32 +12,41 @@ namespace ExpenseTracker.ApplicationLayer.Auth
         private readonly IPasswordSaltHasher _passwordHasher;
         private readonly IUserRepository _userRepository;
         private readonly IEmailValidator _emailValidator;
+        private readonly IUserAuthRepository _userAuthRepository;
+        private readonly IJwtProvider _jwtProvider;
         public LoginUserService(
             IPasswordSaltHasher passwordHasher, 
             IUserRepository userRepository,
-            IEmailValidator emailValidator)
+            IEmailValidator emailValidator,
+            IUserAuthRepository userAuthRepository,
+            IJwtProvider jwtProvider)
         {
             _passwordHasher = passwordHasher;
             _userRepository = userRepository;
             _emailValidator = emailValidator;
+            _userAuthRepository = userAuthRepository;
+            _jwtProvider = jwtProvider;
         }
         public async Task<LoginUserResponse> ExecuteAsync(LoginUserRequest loginRequest)
         {
-            var user = _emailValidator.IsValid(loginRequest.Email)
-                ? await _userRepository.GetByEmailAsync(loginRequest.Email)
-                : await _userRepository.GetByUsername(loginRequest.Username);
+            var user = _emailValidator.IsValid(loginRequest.EmailOrUsername)
+                ? await _userRepository.GetByEmailAsync(loginRequest.EmailOrUsername)
+                : await _userRepository.GetByUsername(loginRequest.EmailOrUsername);
 
-            if (user == null)
-            {
+            if (user == null) 
                 throw new InvalidLoginDataException("Invalid login or password");
-            }
 
-            if (!_passwordHasher.VerifyPassword(loginRequest.Password, user.Passwordhash, user.Salt))
-            {
+            Userauthdatum? userAuthData = await _userAuthRepository.GetByIdAsync(user.Userid);
+
+            if (!_passwordHasher.VerifyPassword(loginRequest.Password, userAuthData!.Passwordhash, userAuthData.Salt)) 
                 throw new InvalidLoginDataException("Invalid login or password");
-            }
 
-            return new LoginUserResponse();
+            var token = _jwtProvider.GenerateToken(user);
+
+            return new LoginUserResponse
+            {
+                Token = token
+            };
         }
     }
 }

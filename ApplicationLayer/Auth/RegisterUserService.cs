@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.ApplicationLayer.Auth.DTO;
+using ExpenseTracker.ApplicationLayer.Mapping.Interfaces;
 using ExpenseTracker.ApplicationLayer.Repositories.Interfaces;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces;
 using ExpenseTracker.DomainLayer.Auth;
@@ -14,18 +15,22 @@ namespace ExpenseTracker.ApplicationLayer.Auth
         private readonly IEmailValidator _emailValidator;
         private readonly IUserNameValidator _userNameValidator;
         private readonly IPasswordValidator _passwordValidator;
+        private readonly IRegisterUserMapper _registerUserMapper;
+        
         public RegisterUserService(
             IUserRepository userRepository, 
             IPasswordSaltHasher passwordHasher, 
             IEmailValidator emailValidator, 
             IUserNameValidator userNameValidator, 
-            IPasswordValidator passwordValidator)
+            IPasswordValidator passwordValidator,
+            IRegisterUserMapper registerUserMapper)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _emailValidator = emailValidator;
             _userNameValidator = userNameValidator;
             _passwordValidator = passwordValidator;
+            _registerUserMapper = registerUserMapper;
         }
         public async Task<RegisterUserResponse> ExecuteAsync(RegisterUserRequest registerUserRequest)
         {
@@ -34,13 +39,7 @@ namespace ExpenseTracker.ApplicationLayer.Auth
 
             PasswordHashDto passwordHash = await _passwordHasher.GetPasswordSaltHashAsync(registerUserRequest.Password);
 
-            User newUser = new User
-            {
-                Username = registerUserRequest.Username,
-                Email = registerUserRequest.Email,
-                Passwordhash = passwordHash.PasswordHash,
-                Salt = passwordHash.Salt
-            };
+            var newUser = await _registerUserMapper.MapUserAsync(registerUserRequest, passwordHash);
 
             await _userRepository.AddAsync(newUser);
 
