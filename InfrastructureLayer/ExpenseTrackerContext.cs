@@ -52,36 +52,6 @@ public partial class ExpenseTrackerContext : DbContext
                 .HasConstraintName("category_userid_fkey");
         });
 
-        modelBuilder.Entity<Refreshtoken>(entity =>
-        {
-            entity.HasKey(e => e.Tokenid).HasName("refreshtoken_pkey");
-
-            entity.ToTable("refreshtoken");
-
-            entity.Property(e => e.Tokenid).HasColumnName("tokenid");
-            entity.Property(e => e.Createat)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("createat");
-            entity.Property(e => e.Expiresat)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("expiresat");
-            entity.Property(e => e.Replacedbytoken)
-                .HasMaxLength(255)
-                .HasColumnName("replacedbytoken");
-            entity.Property(e => e.Revokedat)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("revokedat");
-            entity.Property(e => e.Token)
-                .HasMaxLength(255)
-                .HasColumnName("token");
-            entity.Property(e => e.Userid).HasColumnName("userid");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Refreshtokens)
-                .HasForeignKey(d => d.Userid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("refreshtoken_userid_fkey");
-        });
-
         modelBuilder.Entity<Report>(entity =>
         {
             entity.HasKey(e => e.Reportid).HasName("report_pkey");

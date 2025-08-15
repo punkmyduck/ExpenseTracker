@@ -1,8 +1,11 @@
 
 using ExpenseTracker.ApplicationLayer;
+using ExpenseTracker.ApplicationLayer.Options;
 using ExpenseTracker.InfrastructureLayer;
+using ExpenseTracker.InfrastructureLayer.Extensions;
 using ExpenseTracker.InfrastructureLayer.Middlewares;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace ExpenseTracker
 {
@@ -12,8 +15,13 @@ namespace ExpenseTracker
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();
+            builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
 
+            builder.Services.AddApiAuthentication(
+                builder.Services.BuildServiceProvider()
+                .GetRequiredService<IOptions<JwtOptions>>());
+
+            builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -34,6 +42,14 @@ namespace ExpenseTracker
 
             app.UseHttpsRedirection();
 
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.Always
+            });
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

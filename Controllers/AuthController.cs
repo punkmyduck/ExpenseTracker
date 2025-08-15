@@ -1,6 +1,7 @@
 ﻿using ExpenseTracker.ApplicationLayer.Auth.DTO;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Web;
 
 namespace ExpenseTracker.Controllers
 {
@@ -24,9 +25,13 @@ namespace ExpenseTracker.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginUserRequest loginRequest)
+        public async Task<IActionResult> Login(
+            LoginUserRequest loginRequest)
         {
             var result = await _loginUserService.ExecuteAsync(loginRequest);
+
+            Response.Cookies.Append("OOohMyGooOOad", result.Token);
+
             return Ok(result);
         }
     }
