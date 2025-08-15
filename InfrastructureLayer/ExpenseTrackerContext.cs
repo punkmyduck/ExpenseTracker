@@ -158,6 +158,9 @@ public partial class ExpenseTrackerContext : DbContext
             entity.Property(e => e.Refreshtoken)
                 .HasMaxLength(255)
                 .HasColumnName("refreshtoken");
+            entity.Property(e => e.Rtendsat)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("rtendsat");
             entity.Property(e => e.Salt)
                 .HasMaxLength(255)
                 .HasColumnName("salt");

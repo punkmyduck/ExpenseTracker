@@ -4,6 +4,6 @@ namespace ExpenseTracker.ApplicationLayer.Repositories.Interfaces
 {
     public interface IUserAuthRepository
     {
-        Task<Userauthdatum> GetByIdAsync(int id);
+        Task<Userauthdatum?> GetByIdAsync(int id);
     }
 }

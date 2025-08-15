@@ -13,5 +13,7 @@ public partial class Userauthdatum
 
     public string? Refreshtoken { get; set; }
 
+    public DateTime? Rtendsat { get; set; }
+
     public virtual User User { get; set; } = null!;
 }

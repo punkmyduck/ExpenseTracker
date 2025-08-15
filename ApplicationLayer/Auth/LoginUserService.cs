@@ -26,15 +26,16 @@ namespace ExpenseTracker.ApplicationLayer.Auth
         }
         public async Task<LoginUserResponse> ExecuteAsync(LoginUserRequest loginRequest)
         {
-            var user = _emailValidator.IsValid(loginRequest.Email)
-                ? await _userRepository.GetByEmailAsync(loginRequest.Email)
-                : await _userRepository.GetByUsername(loginRequest.Username);
+            var user = _emailValidator.IsValid(loginRequest.EmailOrUsername)
+                ? await _userRepository.GetByEmailAsync(loginRequest.EmailOrUsername)
+                : await _userRepository.GetByUsername(loginRequest.EmailOrUsername);
 
             if (user == null) 
                 throw new InvalidLoginDataException("Invalid login or password");
 
-            Userauthdatum userAuthData = await _userAuthRepository.GetByIdAsync(user.Userid);
-            if (!_passwordHasher.VerifyPassword(loginRequest.Password, userAuthData.Passwordhash, userAuthData.Salt)) 
+            Userauthdatum? userAuthData = await _userAuthRepository.GetByIdAsync(user.Userid);
+
+            if (!_passwordHasher.VerifyPassword(loginRequest.Password, userAuthData!.Passwordhash, userAuthData.Salt)) 
                 throw new InvalidLoginDataException("Invalid login or password");
 
             return new LoginUserResponse();
