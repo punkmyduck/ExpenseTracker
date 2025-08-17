@@ -1,7 +1,4 @@
-﻿using ExpenseTracker.ApplicationLayer.Mapping.Interfaces;
-using ExpenseTracker.ApplicationLayer.Mapping.Mappers;
-using ExpenseTracker.ApplicationLayer.Providers.Implementations;
-using ExpenseTracker.ApplicationLayer.Providers.Interfaces;
+﻿using ExpenseTracker.ApplicationLayer.Mapping;
 using ExpenseTracker.ApplicationLayer.Services.Implementations;
 using ExpenseTracker.ApplicationLayer.Services.Implementations.AuthServices;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces;

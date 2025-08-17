@@ -1,5 +1,5 @@
 ﻿using ExpenseTracker.ApplicationLayer.DTO.Auth;
-using ExpenseTracker.ApplicationLayer.Mapping.Interfaces;
+using ExpenseTracker.ApplicationLayer.Mapping;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces.Auth;
 using ExpenseTracker.DomainLayer.Exceptions;
 using ExpenseTracker.DomainLayer.Repositories;

@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.DomainLayer.Validation;
+using ExpenseTracker.DomainLayer.Validation.Rules;
 using System.Text.RegularExpressions;
 
 namespace ExpenseTracker.ApplicationLayer.Validation
@@ -9,8 +10,7 @@ namespace ExpenseTracker.ApplicationLayer.Validation
         {
             if (string.IsNullOrWhiteSpace(username))
                 return false;
-            var pattern = @"^[a-zA-Z0-9]{3,20}$";
-            return Regex.IsMatch(username, pattern);
+            return Regex.IsMatch(username, ValidationPatterns.UserName);
         }
     }
 }

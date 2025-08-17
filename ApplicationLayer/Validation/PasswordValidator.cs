@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.DomainLayer.Validation;
+using ExpenseTracker.DomainLayer.Validation.Rules;
 using System.Text.RegularExpressions;
 
 namespace ExpenseTracker.ApplicationLayer.Validation
@@ -9,9 +10,7 @@ namespace ExpenseTracker.ApplicationLayer.Validation
         {
             if (string.IsNullOrEmpty(password) || password.Length < 6)
                 return false;
-            var hasLetter = Regex.IsMatch(password, @"[a-zA-Z]");
-            var hasDigit = Regex.IsMatch(password, @"\d");
-            return hasLetter && hasDigit;
+            return Regex.IsMatch(password, ValidationPatterns.Password);
         }
     }
 }

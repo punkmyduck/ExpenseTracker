@@ -4,7 +4,6 @@ using ExpenseTracker.DomainLayer.Validation;
 using ExpenseTracker.DomainLayer.Repositories;
 using ExpenseTracker.ApplicationLayer.DTO.Auth;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces.Auth;
-using ExpenseTracker.ApplicationLayer.Providers.Interfaces;
 
 namespace ExpenseTracker.ApplicationLayer.Services.Implementations.AuthServices
 {

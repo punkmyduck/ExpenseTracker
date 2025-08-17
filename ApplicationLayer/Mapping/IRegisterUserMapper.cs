@@ -1,7 +1,7 @@
 ﻿using ExpenseTracker.ApplicationLayer.DTO.Auth;
 using ExpenseTracker.DomainLayer.Entities;
 
-namespace ExpenseTracker.ApplicationLayer.Mapping.Interfaces
+namespace ExpenseTracker.ApplicationLayer.Mapping
 {
     public interface IRegisterUserMapper
     {

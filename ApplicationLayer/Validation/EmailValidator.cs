@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.DomainLayer.Validation;
+using ExpenseTracker.DomainLayer.Validation.Rules;
 using System.Text.RegularExpressions;
 
 namespace ExpenseTracker.ApplicationLayer.Validation
@@ -11,9 +12,7 @@ namespace ExpenseTracker.ApplicationLayer.Validation
             {
                 return false;
             }
-
-            var pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            return Regex.IsMatch(email, pattern);
+            return Regex.IsMatch(email, ValidationPatterns.EmailPattern);
         }
     }
 }
