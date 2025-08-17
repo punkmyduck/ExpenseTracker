@@ -3,7 +3,8 @@ using ExpenseTracker.ApplicationLayer;
 using ExpenseTracker.ApplicationLayer.Options;
 using ExpenseTracker.InfrastructureLayer;
 using ExpenseTracker.InfrastructureLayer.Extensions;
-using ExpenseTracker.InfrastructureLayer.Middlewares;
+using ExpenseTracker.InfrastructureLayer.Persistence;
+using ExpenseTracker.PresentationLayer.Middlewares;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 

@@ -1,5 +1,6 @@
-﻿using ExpenseTracker.ApplicationLayer.Repositories.Interfaces;
-using ExpenseTracker.DomainLayer.ExpenseTrackerDataModels;
+﻿using ExpenseTracker.DomainLayer.Entities;
+using ExpenseTracker.DomainLayer.Repositories;
+using ExpenseTracker.InfrastructureLayer.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseTracker.InfrastructureLayer.Repositories

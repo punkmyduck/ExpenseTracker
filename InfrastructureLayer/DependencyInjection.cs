@@ -1,4 +1,4 @@
-﻿using ExpenseTracker.ApplicationLayer.Repositories.Interfaces;
+﻿using ExpenseTracker.DomainLayer.Repositories;
 using ExpenseTracker.InfrastructureLayer.Repositories;
 
 namespace ExpenseTracker.InfrastructureLayer

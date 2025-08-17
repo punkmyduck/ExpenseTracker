@@ -1,9 +1,13 @@
-﻿using ExpenseTracker.ApplicationLayer.Auth;
-using ExpenseTracker.ApplicationLayer.Auth.Validation;
-using ExpenseTracker.ApplicationLayer.Mapping.Interfaces;
+﻿using ExpenseTracker.ApplicationLayer.Mapping.Interfaces;
+using ExpenseTracker.ApplicationLayer.Mapping.Mappers;
+using ExpenseTracker.ApplicationLayer.Providers.Implementations;
+using ExpenseTracker.ApplicationLayer.Providers.Interfaces;
 using ExpenseTracker.ApplicationLayer.Services.Implementations;
+using ExpenseTracker.ApplicationLayer.Services.Implementations.AuthServices;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces;
-using ExpenseTracker.DomainLayer.Auth.Validation;
+using ExpenseTracker.ApplicationLayer.Services.Interfaces.Auth;
+using ExpenseTracker.ApplicationLayer.Validation;
+using ExpenseTracker.DomainLayer.Validation;
 
 namespace ExpenseTracker.ApplicationLayer
 {
@@ -12,7 +16,7 @@ namespace ExpenseTracker.ApplicationLayer
         public static IServiceCollection AddApplicationLayer(this IServiceCollection services)
         {
             services.AddScoped<IRegisterUserService, RegisterUserService>();
-            services.AddScoped<IPasswordSaltHasher, PasswordSaltHasher>();
+            services.AddScoped<IPasswordSaltHasherService, PasswordSaltHasherService>();
             services.AddScoped<IEmailValidator, EmailValidator>();
             services.AddScoped<IUserNameValidator, UserNameValidator>();
             services.AddScoped<IPasswordValidator, PasswordValidator>();
