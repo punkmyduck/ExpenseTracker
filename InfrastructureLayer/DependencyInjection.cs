@@ -10,6 +10,9 @@ namespace ExpenseTracker.InfrastructureLayer
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAuthHistoryRepository, UserAuthHistoryRepository>();
             services.AddScoped<IUserAuthRepository, UserAuthRepository>();
+            services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+            services.AddScoped<IUserCategoriesRepository, UserCategoriesRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             return services;
         }
