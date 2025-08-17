@@ -1,5 +1,5 @@
 ﻿using ExpenseTracker.ApplicationLayer.Options;
-using ExpenseTracker.ApplicationLayer.Providers.Interfaces;
+using ExpenseTracker.ApplicationLayer.Services.Interfaces.Auth;
 using ExpenseTracker.DomainLayer.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -7,7 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace ExpenseTracker.ApplicationLayer.Providers.Implementations
+namespace ExpenseTracker.ApplicationLayer.Services.Implementations.AuthServices
 {
     public class JwtProvider : IJwtProvider
     {
