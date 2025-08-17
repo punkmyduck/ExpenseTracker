@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.ApplicationLayer.Services.Interfaces.Categories;
+using ExpenseTracker.InfrastructureLayer.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseTracker.PresentationLayer.Controllers
