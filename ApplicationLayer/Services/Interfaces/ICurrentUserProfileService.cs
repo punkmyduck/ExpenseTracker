@@ -1,4 +1,4 @@
-﻿using ExpenseTracker.DomainLayer.ExpenseTrackerDataModels;
+﻿using ExpenseTracker.DomainLayer.Entities;
 
 namespace ExpenseTracker.ApplicationLayer.Services.Interfaces
 {

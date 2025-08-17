@@ -1,5 +1,5 @@
-﻿using ExpenseTracker.ApplicationLayer.Auth.DTO;
-using ExpenseTracker.DomainLayer.ExpenseTrackerDataModels;
+﻿using ExpenseTracker.ApplicationLayer.DTO.Auth;
+using ExpenseTracker.DomainLayer.Entities;
 
 namespace ExpenseTracker.ApplicationLayer.Mapping.Interfaces
 {

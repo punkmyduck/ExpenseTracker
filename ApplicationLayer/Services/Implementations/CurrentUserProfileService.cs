@@ -1,6 +1,6 @@
-﻿using ExpenseTracker.ApplicationLayer.Repositories.Interfaces;
-using ExpenseTracker.ApplicationLayer.Services.Interfaces;
-using ExpenseTracker.DomainLayer.ExpenseTrackerDataModels;
+﻿using ExpenseTracker.ApplicationLayer.Services.Interfaces;
+using ExpenseTracker.DomainLayer.Entities;
+using ExpenseTracker.DomainLayer.Repositories;
 
 namespace ExpenseTracker.ApplicationLayer.Services.Implementations
 {
