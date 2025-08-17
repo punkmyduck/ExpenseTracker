@@ -29,6 +29,7 @@ namespace ExpenseTracker.ApplicationLayer
             services.AddScoped<ICategoriesService, CategoriesService>();
             services.AddScoped<ITransactionCreatorService, TransactionCreatorService>();
             services.AddScoped<ITransactionCreationMapper, TransactionCreationMapper>();
+            services.AddScoped<IUserCategoryMapper, UserCategoryMapper>();
 
             return services;
         }

@@ -11,7 +11,7 @@ namespace ExpenseTracker.InfrastructureLayer.Repositories
         {
             _context = context;
         }
-        public async Task CreateTransactionAsync(Transaction transaction)
+        public async Task AddTransactionAsync(Transaction transaction)
         {
             await _context.Transactions.AddAsync(transaction);
             await _context.SaveChangesAsync();

@@ -19,7 +19,7 @@ namespace ExpenseTracker.ApplicationLayer.Services.Implementations.Transactions
         public async Task<TransactionCreationResponseDto> CreateTransaction(int userId, TransactionCreationRequestDto transactionCreationDto)
         {
             var transaction = await _transactionCreationMapper.Map(transactionCreationDto, userId);
-            await _transactionRepository.CreateTransactionAsync(transaction);
+            await _transactionRepository.AddTransactionAsync(transaction);
             return new TransactionCreationResponseDto{
                 TransactionId = transaction.Transactionid,
                 Type = transaction.Type,

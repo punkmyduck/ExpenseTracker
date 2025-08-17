@@ -4,6 +4,6 @@ namespace ExpenseTracker.DomainLayer.Repositories
 {
     public interface ITransactionRepository
     {
-        Task CreateTransactionAsync(Transaction transaction);
+        Task AddTransactionAsync(Transaction transaction);
     }
 }
