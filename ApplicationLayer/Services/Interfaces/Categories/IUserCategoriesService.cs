@@ -1,9 +1,13 @@
-﻿using ExpenseTracker.DomainLayer.Entities;
+﻿using ExpenseTracker.ApplicationLayer.DTO.Categories;
+using ExpenseTracker.DomainLayer.Entities;
 
 namespace ExpenseTracker.ApplicationLayer.Services.Interfaces.Categories
 {
     public interface IUserCategoriesService
     {
-        Task<List<Category>?> GetUserCategories(int userId);
+        Task<List<GetUserCategoryDto>> GetUserCategoriesAsync(int userId);
+        Task<UserCategoryCreationResponse> CreateUserCategoryAsync(int userId, UserCategoryCreationRequest userCategoryCreationRequest);
+        Task RemoveUserCategoryAsync(int categoryId, int userId);
+        Task UpdateUserCategoryAsync(int categoryId, int userId, string categoryName);
     }
 }
