@@ -11,19 +11,52 @@ namespace ExpenseTracker.PresentationLayer.Controllers
     [Route("[controller]")]
     public class TransactionsController : ControllerBase
     {
-        private readonly ITransactionCreatorService _transactionCreatorService;
-        public TransactionsController(ITransactionCreatorService transactionCreatorService)
+        private readonly ITransactionService _transactionCreatorService;
+        public TransactionsController(ITransactionService transactionCreatorService)
         {
             _transactionCreatorService = transactionCreatorService;
         }
 
         [Authorize]
-        [HttpPost("create")]
+        [HttpGet]
+        public async Task<IActionResult> GetTransactions()
+        {
+            var userId = User.GetRequiredUserId();
+
+            var result = await _transactionCreatorService.GetTransactionsAsync(userId);
+
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPost]
         public async Task<IActionResult> CreateTransaction([FromQuery] TransactionCreationRequestDto transactionCreationRequestDto)
         {
             var userId = User.GetRequiredUserId();
-            var result = await _transactionCreatorService.CreateTransaction(userId, transactionCreationRequestDto);
+            var result = await _transactionCreatorService.CreateTransactionAsync(userId, transactionCreationRequestDto);
             return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> UpdateUserCategory(UpdateTransactionDto updateTransactionDto)
+        {
+            var userId = User.GetRequiredUserId();
+
+            await _transactionCreatorService.UpdateTransactionAsync(userId, updateTransactionDto);
+
+            return NoContent();
+        }
+
+        [Authorize]
+        [HttpDelete("{transactionId:int}")]
+        public async Task<IActionResult> DeleteUserCategory(int transactionId)
+        {
+            var userId = User.GetRequiredUserId();
+
+            await _transactionCreatorService.RemoveTransactionAsync(userId, transactionId);
+
+            return NoContent();
         }
     }
 }

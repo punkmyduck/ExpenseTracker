@@ -51,7 +51,7 @@ namespace ExpenseTracker.ApplicationLayer.Services.Implementations.Categories
 
         public async Task RemoveUserCategoryAsync(int categoryId, int userId)
         {
-            if (!await _userCategoriesRepository.CheckUserCategoryPermission(categoryId, userId))
+            if (!await _userCategoriesRepository.CheckUserCategoryPermissionAsync(categoryId, userId))
             {
                 throw new UnauthorizedAccessException("You do not have permission to delete this category.");
             }
@@ -60,7 +60,7 @@ namespace ExpenseTracker.ApplicationLayer.Services.Implementations.Categories
 
         public async Task UpdateUserCategoryAsync(int categoryId, int userId, string categoryName)
         {
-            if (!await _userCategoriesRepository.CheckUserCategoryPermission(categoryId, userId))
+            if (!await _userCategoriesRepository.CheckUserCategoryPermissionAsync(categoryId, userId))
             {
                 throw new UnauthorizedAccessException("You do not have permission to update this category.");
             }

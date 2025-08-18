@@ -7,11 +7,11 @@ namespace ExpenseTracker.PresentationLayer.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TestController : ControllerBase
+    public class CurrentUserController : ControllerBase
     {
         private readonly ICurrentUserProfileService _currentUserProfileService;
 
-        public TestController(
+        public CurrentUserController(
             ICurrentUserProfileService currentUserProfileService)
         {
             _currentUserProfileService = currentUserProfileService;
