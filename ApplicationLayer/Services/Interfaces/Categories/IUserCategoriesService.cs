@@ -1,5 +1,4 @@
 ﻿using ExpenseTracker.ApplicationLayer.DTO.Categories;
-using ExpenseTracker.DomainLayer.Entities;
 
 namespace ExpenseTracker.ApplicationLayer.Services.Interfaces.Categories
 {

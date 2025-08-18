@@ -27,7 +27,7 @@ namespace ExpenseTracker.ApplicationLayer
             services.AddScoped<IJwtProvider, JwtProvider>();
             services.AddScoped<IUserCategoriesService, UserCategoriesService>();
             services.AddScoped<ICategoriesService, CategoriesService>();
-            services.AddScoped<ITransactionCreatorService, TransactionCreatorService>();
+            services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<ITransactionCreationMapper, TransactionCreationMapper>();
             services.AddScoped<IUserCategoryMapper, UserCategoryMapper>();
 
