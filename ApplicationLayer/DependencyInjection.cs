@@ -2,10 +2,12 @@
 using ExpenseTracker.ApplicationLayer.Services.Implementations;
 using ExpenseTracker.ApplicationLayer.Services.Implementations.AuthServices;
 using ExpenseTracker.ApplicationLayer.Services.Implementations.Categories;
+using ExpenseTracker.ApplicationLayer.Services.Implementations.Reports;
 using ExpenseTracker.ApplicationLayer.Services.Implementations.Transactions;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces.Auth;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces.Categories;
+using ExpenseTracker.ApplicationLayer.Services.Interfaces.Reports;
 using ExpenseTracker.ApplicationLayer.Services.Interfaces.Transactions;
 using ExpenseTracker.ApplicationLayer.Validation;
 using ExpenseTracker.DomainLayer.Validation;
@@ -27,9 +29,12 @@ namespace ExpenseTracker.ApplicationLayer
             services.AddScoped<IJwtProvider, JwtProvider>();
             services.AddScoped<IUserCategoriesService, UserCategoriesService>();
             services.AddScoped<ICategoriesService, CategoriesService>();
-            services.AddScoped<ITransactionCreatorService, TransactionCreatorService>();
+            services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<ITransactionCreationMapper, TransactionCreationMapper>();
             services.AddScoped<IUserCategoryMapper, UserCategoryMapper>();
+            services.AddScoped<IReportWorkingService, ReportWorkingService>();
+            services.AddScoped<ITransactionsToReportMapper, TransactionsToReportMapper>();
+            services.AddScoped<IReportToGetReportDtoMapper, ReportToGetReportDtoMapper>();
 
             return services;
         }
