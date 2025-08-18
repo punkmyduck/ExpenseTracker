@@ -25,7 +25,7 @@ namespace ExpenseTracker.InfrastructureLayer.Repositories
             var transaction = await GetTransactionByIdAsync(transactionId);
             if (transaction == null)
             {
-                throw new KeyNotFoundException("Category not found.");
+                throw new KeyNotFoundException("Transaction not found.");
             }
             if (transaction.Userid != userId)
             {
@@ -72,6 +72,23 @@ namespace ExpenseTracker.InfrastructureLayer.Repositories
                 TransactionType.Expense => 'E',
                 _ => throw new ArgumentOutOfRangeException(nameof(type), "Unknown transaction type")
             };
+        }
+
+        public async Task<List<Transaction>> GetTransactionsByFilterAsync(TransactionsFilterParams filterParams, int userId)
+        {
+            var query = _context.Transactions.AsQueryable();
+
+            query = query.Where(t => t.Userid == userId &&
+                                     t.Date >= filterParams.StartDateTime &&
+                                     t.Date <= filterParams.EndDateTime);
+
+            if (filterParams.CategoryId.HasValue)
+                query = query.Where(t => t.Categoryid == filterParams.CategoryId.Value);
+
+            if (filterParams.TransactionType.HasValue)
+                query = query.Where(t => t.Type == (char)filterParams.TransactionType.Value);
+
+            return await query.ToListAsync();
         }
     }
 }
