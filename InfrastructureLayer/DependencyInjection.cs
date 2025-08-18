@@ -13,6 +13,7 @@ namespace ExpenseTracker.InfrastructureLayer
             services.AddScoped<ICategoriesRepository, CategoriesRepository>();
             services.AddScoped<IUserCategoriesRepository, UserCategoriesRepository>();
             services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<IReportRepository, ReportRepository>();
 
             return services;
         }
