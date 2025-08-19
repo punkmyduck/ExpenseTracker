@@ -28,6 +28,8 @@
 - **Entity Framework Core (PostgreSQL)**
 - **JWT Bearer Authentication**
 - **Clean Architecture** (Domain → Application → Infrastructure → Presentation)
+- **Swagger-документация API**
+- **Microsoft.VisualStudio.TestTools.UnitTesting** для юнит-тестов
 
 ## Структура проекта
 ```
