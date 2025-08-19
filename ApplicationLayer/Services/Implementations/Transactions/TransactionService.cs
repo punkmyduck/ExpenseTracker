@@ -10,12 +10,15 @@ namespace ExpenseTracker.ApplicationLayer.Services.Implementations.Transactions
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly ITransactionCreationMapper _transactionCreationMapper;
+        private readonly ITransactionsToGetTransactionsDtoMapper _transactionsToGetTransactionsDtoMapper;
         public TransactionService(
             ITransactionRepository transactionRepository,
-            ITransactionCreationMapper transactionCreationMapper)
+            ITransactionCreationMapper transactionCreationMapper,
+            ITransactionsToGetTransactionsDtoMapper transactionsToGetTransactionsDtoMapper)
         {
             _transactionRepository = transactionRepository;
             _transactionCreationMapper = transactionCreationMapper;
+            _transactionsToGetTransactionsDtoMapper = transactionsToGetTransactionsDtoMapper;
         }
         public async Task<TransactionCreationResponseDto> CreateTransactionAsync(int userId, TransactionCreationRequestDto transactionCreationDto)
         {
@@ -32,24 +35,20 @@ namespace ExpenseTracker.ApplicationLayer.Services.Implementations.Transactions
             };
         }
 
+        public async Task<List<GetTransactionsDto>> GetFilteredTransactionsAsync(int userId, TransactionsFilterParams filterParams)
+        {
+            var transactions = await _transactionRepository.GetTransactionsByFilterAsync(filterParams, userId);
+
+            var result = await _transactionsToGetTransactionsDtoMapper.Map(transactions);
+
+            return result;
+        }
+
         public async Task<List<GetTransactionsDto>> GetTransactionsAsync(int userId)
         {
             var transactions = await _transactionRepository.GetTransactionsByUserIdAsync(userId);
 
-            List<GetTransactionsDto> result = new();
-
-            foreach (var t in transactions)
-            {
-                result.Add(new GetTransactionsDto
-                {
-                    TransactionId = t.Transactionid,
-                    TransactionType = t.Type == 'I' ? TransactionType.Income : TransactionType.Expense,
-                    Amount = t.Amount,
-                    Date = t.Date,
-                    Commentary = t.Commentary,
-                    CategoryId = t.Categoryid
-                });
-            }
+            var result = await _transactionsToGetTransactionsDtoMapper.Map(transactions);
 
             return result;
         }

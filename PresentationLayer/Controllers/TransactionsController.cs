@@ -18,12 +18,23 @@ namespace ExpenseTracker.PresentationLayer.Controllers
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet("allusertransactions")]
         public async Task<IActionResult> GetTransactions()
         {
             var userId = User.GetRequiredUserId();
 
             var result = await _transactionCreatorService.GetTransactionsAsync(userId);
+
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet("filtertransactions")]
+        public async Task<IActionResult> GetFilteredTransactionsAsync([FromQuery] TransactionsFilterParams filterParams)
+        {
+            var userId = User.GetRequiredUserId();
+
+            var result = await _transactionCreatorService.GetFilteredTransactionsAsync(userId, filterParams);
 
             return Ok(result);
         }

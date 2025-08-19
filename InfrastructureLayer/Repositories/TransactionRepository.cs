@@ -86,7 +86,17 @@ namespace ExpenseTracker.InfrastructureLayer.Repositories
                 query = query.Where(t => t.Categoryid == filterParams.CategoryId.Value);
 
             if (filterParams.TransactionType.HasValue)
-                query = query.Where(t => t.Type == (char)filterParams.TransactionType.Value);
+                switch (filterParams.TransactionType.Value)
+                {
+                    case TransactionType.Expense:
+                        query = query.Where(t => t.Type == 'E');
+                        break;
+                    case TransactionType.Income:
+                        query = query.Where(t => t.Type == 'I');
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException("Unknown transaction type");
+                }
 
             return await query.ToListAsync();
         }
